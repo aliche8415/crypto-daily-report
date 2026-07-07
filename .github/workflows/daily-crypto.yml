@@ -1,0 +1,27 @@
+name: Daily Crypto Report
+
+on:
+  schedule:
+    - cron: '30 8 * * *'     # ساعت ۱۲:۳۰ ظهر به وقت تهران
+  workflow_dispatch:         # برای تست دستی
+
+jobs:
+  report:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      - name: Install dependencies
+        run: pip install requests
+      
+      - name: Run crypto report
+        env:
+          EMAIL: ${{ secrets.EMAIL }}
+          EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
+          TO_EMAIL: ${{ secrets.TO_EMAIL }}
+        run: python crypto_report.py
