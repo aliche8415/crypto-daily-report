@@ -2,7 +2,7 @@ name: Pin Bar Signals
 
 on:
   schedule:
-    - cron: '0 * * * *'      # هر ساعت یکبار چک کنه
+    - cron: '0 * * * *'     # هر ساعت
   workflow_dispatch:
 
 jobs:
