@@ -27,13 +27,14 @@ def is_pinbar(o, h, l, c):
     body = abs(c - o)
     upper_wick = h - max(o, c)
     lower_wick = min(o, c) - l
-    total_range = h - l if h > l else 1
+    total_range = h - l if (h - l) > 0 else 1
     
-    if body / total_range < 0.3:  # بدنه کوچک
-        if lower_wick > 2 * body:   # Pin Bar صعودی
-            return "🟢 Bullish Pin Bar - سیگنال خرید"
-        elif upper_wick > 2 * body: # Pin Bar نزولی
-            return "🔴 Bearish Pin Bar - سیگنال فروش"
+    # شرایط سخت‌گیرانه‌تر برای Pin Bar
+    if body / total_range < 0.25:           # بدنه خیلی کوچک
+        if lower_wick > 2.5 * body and upper_wick < body * 0.5:   # Pin Bar صعودی قوی
+            return "🟢 Bullish Pin Bar قوی - سیگنال خرید"
+        elif upper_wick > 2.5 * body and lower_wick < body * 0.5: # Pin Bar نزولی قوی
+            return "🔴 Bearish Pin Bar قوی - سیگنال فروش"
     return None
 
 def analyze():
